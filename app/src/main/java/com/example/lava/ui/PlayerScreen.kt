@@ -4,14 +4,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-// ...
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.SkipNext
-import androidx.compose.material.icons.filled.SkipPrevious
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Pause
-import androidx.compose.material3.Icon
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material3.Icon
@@ -36,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.lava.data.MediaStateRepository
@@ -102,23 +94,7 @@ fun PlayerScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                ControlButton(icon = Icons.Default.SkipPrevious, onClick = onSkipPrev)
-                
-                // Custom Play/Pause Icon or standard
-                val playIcon = if (mediaInfo.isPlaying) {
-                     // Since I don't have a pause icon in standard filled without importing more, I need to check imports.
-                     // Actually filled has basic ones.
-                     // I will just use a Text or specific simple shapes if icons missing, 
-                     // but Icons.Default should have PlayArrow and Pause.
-                     // I need to make sure I import them.
-                     // For compilation safety I will use a simple logical switch
-                    Icons.Default.SkipNext // Placeholder, I'll fix imports below
-                } else {
-                    Icons.Default.SkipNext 
-                }
-                
-                // Wait, I should use the correct icons.
-                // I'll add PlayArrow and Pause to imports in the file content.
+                ControlButton(icon = Icons.Filled.SkipPrevious, onClick = onSkipPrev)
                 
                 Box(modifier = Modifier
                     .size(64.dp)
@@ -127,9 +103,6 @@ fun PlayerScreen(
                     .clickable { onPlayPause() },
                     contentAlignment = Alignment.Center
                 ) {
-                    // Start/Pause symbol
-                    // Drawing simple primitives or using vector
-                    // I will use text for "target" simplicity if icons fail, but let's try to add proper icons
                    if (mediaInfo.isPlaying) {
                        // Pause symbol (2 bars)
                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -138,22 +111,16 @@ fun PlayerScreen(
                        }
                    } else {
                         // Play symbol (triangle)
-                        // Canvas drawing
-                        Canvas(modifier = Modifier.size(24.dp)) {
-                            drawPath(
-                                path = androidx.compose.ui.graphics.Path().apply {
-                                    moveTo(0f, 0f)
-                                    lineTo(size.width, size.height / 2)
-                                    lineTo(0f, size.height)
-                                    close()
-                                },
-                                color = Color.White
-                            )
-                        }
+                         Icon(
+                            imageVector = Icons.Filled.PlayArrow,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(32.dp)
+                        )
                    }
                 }
 
-                ControlButton(icon = Icons.Default.SkipNext, onClick = onSkipNext)
+                ControlButton(icon = Icons.Filled.SkipNext, onClick = onSkipNext)
             }
         }
     }
