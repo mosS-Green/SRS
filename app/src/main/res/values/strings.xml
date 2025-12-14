@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Lava</string>
+    <string name="service_name">Lava Media Service</string>
+</resources>
